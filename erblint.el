@@ -1,4 +1,4 @@
-;;; erblint.el --- An Emacs interface for Shopify's erblint tool
+;;; erblint.el --- An interface for checking HTML ERB files using Erblint
 
 ;; Author: Leonardo Santos
 ;; URL: https://github.com/leodcs/erblint-emacs
@@ -35,7 +35,7 @@
 (require 'tramp)
 
 (defgroup erblint nil
-  "An Emacs interface for Shopify's Erblint tool."
+  "An interface for checking ERB files using Erblint."
   :group 'tools
   :group 'convenience
   :prefix "erblint-"

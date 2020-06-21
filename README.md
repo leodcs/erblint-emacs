@@ -2,7 +2,7 @@
 
 ## Description
 
-A simple Emacs interface for checking html ERB files using [Shopify's Erblint tool](https://github.com/Shopify/erb-lint).
+An interface for checking HTML ERB files using [Shopify's Erblint tool](https://github.com/Shopify/erb-lint).
 
 ## Installation
 
