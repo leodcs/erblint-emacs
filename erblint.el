@@ -41,7 +41,6 @@
   :prefix "erblint-"
   :link '(url-link :tag "GitHub" "https://github.com/leodcs/erblint-emacs"))
 
-
 (defcustom erblint-check-command
   "erblint"
   "The command used to run Erblint checks."
@@ -52,6 +51,11 @@
   "The command used to run Erblint's autocorrection."
   :type 'string)
 
+(defcustom erblint-project-root-function
+  'vc-root-dir
+  "The command used to find the root directory for the project."
+  :group 'erblint
+  :type 'function)
 
 (defcustom erblint-keymap-prefix (kbd "C-c C-e")
   "Erblint keymap prefix."
@@ -68,31 +72,25 @@
   :group 'erblint
   :type 'boolean)
 
+
 (defun erblint-command-prefix ()
   "Build the prefix to the command based on if we should use the system executable command or not."
   (if (and (not erblint-prefer-system-executable) (erblint-bundled-p)) "bundle exec"
     ""))
 
 (defun erblint-local-file-name (file-name)
-  "Retrieve local filename if FILE-NAME is opened via TRAMP."
+  "Return local filename if FILE-NAME is opened via TRAMP."
   (cond ((tramp-tramp-file-p file-name)
          (tramp-file-name-localname (tramp-dissect-file-name file-name)))
         (t
          file-name)))
 
 (defun erblint-project-root (&optional no-error)
-  "Retrieve the root directory of a project if available.
+  "Return the root directory of a project if available.
 When NO-ERROR is non-nil returns nil instead of raise an error."
-  (or
-   (car
-    (mapcar #'expand-file-name
-            (delq nil
-                  (mapcar
-                   (lambda (f) (locate-dominating-file default-directory f))
-                   erblint-project-root-files))))
-   (if no-error
-       nil
-     (error "You're not inside a project"))))
+  (or (funcall erblint-project-root-function)
+      (if no-error nil
+        (error "You're not inside a project"))))
 
 (defun erblint-buffer-name (file-or-dir)
   "Generate a name for the Erblint buffer from FILE-OR-DIR."
@@ -116,7 +114,7 @@ Alternatively prompt user for directory."
     (let ((default-directory (or (erblint-project-root 'no-error) default-directory)))
       (compilation-start
        (erblint-build-command command (erblint-local-file-name directory))
-       'projectile-rails-compilation-mode
+       'compilation-mode
        (lambda (arg) (message arg) (erblint-buffer-name directory))))))
 
 ;;;###autoload
@@ -154,7 +152,7 @@ Alternatively prompt user for directory."
         (let ((default-directory (or (erblint-project-root 'no-error) default-directory)))
           (compilation-start
            (erblint-build-command command (erblint-local-file-name file-name))
-           'projectile-rails-compilation-mode
+           'compilation-mode
            (lambda (_arg) (erblint-buffer-name file-name))))
       (error "Buffer is not associated to a file"))))
 
