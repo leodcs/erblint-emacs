@@ -39,12 +39,8 @@
   :group 'tools
   :group 'convenience
   :prefix "erblint-"
-  :link '(url-link :tag "GitHub" "TODO"))
+  :link '(url-link :tag "GitHub" "https://github.com/leodcs/erblint-emacs"))
 
-(defcustom erblint-project-root-files
-  '(".projectile" ".git" ".hg" ".bzr" "_darcs" "Gemfile")
-  "A list of files considered to mark the root of a project."
-  :type '(repeat string))
 
 (defcustom erblint-check-command
   "erblint"
