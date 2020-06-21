@@ -72,6 +72,11 @@
   :group 'erblint
   :type 'boolean)
 
+(defun erblint-command-prefix ()
+  "Build the prefix to the command based on if we should use the system executable command or not."
+  (if (and (not erblint-prefer-system-executable) (erblint-bundled-p)) "bundle exec"
+    ""))
+
 (defun erblint-local-file-name (file-name)
   "Retrieve local filename if FILE-NAME is opened via TRAMP."
   (cond ((tramp-tramp-file-p file-name)
@@ -100,11 +105,9 @@ When NO-ERROR is non-nil returns nil instead of raise an error."
 (defun erblint-build-command (command path)
   "Build the full command to be run based on COMMAND and PATH.
 The command will be prefixed with `bundle exec` if Erblint is bundled."
-  (concat
-   (if (and (not erblint-prefer-system-executable) (erblint-bundled-p)) "bundle exec " "")
-   command
-   " "
-   path))
+  (mapconcat 'identity
+             (list (erblint-command-prefix) command (shell-quote-argument path))
+             " "))
 
 (defun erblint--dir-command (command &optional directory)
   "Run COMMAND in DIRECTORY (if present).
