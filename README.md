@@ -18,19 +18,14 @@ and then require it:
 
 ## Usage
 
-Command                                         | Description                                             |
-------------------------------------------------|---------------------------------------------------------|
-<kbd>M-x erblint-check-project</kbd>            | Runs ErbLint on the entire project                      |
-<kbd>M-x erblint-check-directory</kbd>          | Prompts from a directory on which to run ErbLint        |
-<kbd>M-x erblint-autocorrect-project</kbd>      | Runs auto-correct on the entire project                 |
-<kbd>M-x erblint-autocorrect-directory</kbd>    | Prompts for a directory on which to run auto-correct    |
-<kbd>M-x erblint-check-current-file</kbd>       | Runs ErbLint on current file                            |
-<kbd>M-x erblint-autocorrect-current-file</kbd> | Runs auto-correct on current file                       |
-
-
-### MELPA
-
-// Soon
+Command                                     | Description                                             |
+--------------------------------------------|---------------------------------------------------------|
+<kbd>erblint-check-current-file</kbd>       | Runs ErbLint on current file                            |
+<kbd>erblint-autocorrect-current-file</kbd> | Runs auto-correct on current file                       |
+<kbd>erblint-check-directory</kbd>          | Prompts from a directory on which to run ErbLint        |
+<kbd>erblint-autocorrect-directory</kbd>    | Prompts for a directory on which to run auto-correct    |
+<kbd>erblint-check-project</kbd>            | Runs ErbLint on the entire project                      |
+<kbd>erblint-autocorrect-project</kbd>      | Runs auto-correct on the entire project                 |
 
 ## Bugs & Improvements
 
